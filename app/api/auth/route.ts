@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createHmac, timingSafeEqual } from "crypto";
 
-const ADMIN_PASSWORD = process.env.ADMIN_PASSWORD ?? "";
+const ADMIN_PASSWORD = (process.env.ADMIN_PASSWORD ?? "").trim();
 const COOKIE_NAME = "tower-admin-token";
 const MAX_AGE = 60 * 60 * 24 * 7; // 7 days
 
@@ -40,7 +40,7 @@ export async function POST(req: NextRequest) {
   const body = await req.json().catch(() => null);
   const password = body?.password;
 
-  if (typeof password !== "string" || password !== ADMIN_PASSWORD) {
+  if (typeof password !== "string" || password.trim() !== ADMIN_PASSWORD) {
     return NextResponse.json({ error: "Wrong password" }, { status: 401 });
   }
 
