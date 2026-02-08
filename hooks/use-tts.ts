@@ -23,13 +23,25 @@ export function useTTS() {
 
     speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang === "en" ? "en-US" : "ca-ES";
 
     const voices = voicesRef.current;
-    const langVoice = voices.find(
-      (v) => v.lang.startsWith(lang) && v.localService
-    );
-    if (langVoice) utterance.voice = langVoice;
+
+    if (lang === "en") {
+      utterance.lang = "en-US";
+      const voice = voices.find((v) => v.lang.startsWith("en") && v.localService);
+      if (voice) utterance.voice = voice;
+    } else {
+      // Try Catalan/Valencian first, then fall back to Spanish
+      utterance.lang = "ca-ES";
+      const caVoice = voices.find((v) => v.lang.startsWith("ca") && v.localService);
+      if (caVoice) {
+        utterance.voice = caVoice;
+      } else {
+        utterance.lang = "es-ES";
+        const esVoice = voices.find((v) => v.lang.startsWith("es") && v.localService);
+        if (esVoice) utterance.voice = esVoice;
+      }
+    }
 
     utterance.rate = 0.9;
     utterance.onstart = () => setSpeaking(true);

@@ -49,12 +49,15 @@ export function TranslationRow({ entry, onClick }: TranslationRowProps) {
         </button>
       </div>
 
-      {/* Notes */}
+      {/* Nota */}
       {entry.notes && (
-        <p className="mt-2 text-xs text-muted-foreground/70 leading-relaxed">
-          <span className="font-medium text-muted-foreground/90">Note:</span>{" "}
-          {entry.notes}
-        </p>
+        <>
+          <div className="mt-2 border-t border-border" />
+          <p className="mt-2 text-xs text-muted-foreground/70 leading-relaxed italic">
+            <span className="font-medium text-muted-foreground/90">Nota:</span>{" "}
+            {entry.notes}
+          </p>
+        </>
       )}
     </div>
   );
