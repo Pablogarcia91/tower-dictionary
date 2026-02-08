@@ -16,9 +16,10 @@ import {
 interface AppHeaderProps {
   onOpenSearch: () => void;
   entryCount: number;
+  isAdmin?: boolean;
 }
 
-export function AppHeader({ onOpenSearch, entryCount }: AppHeaderProps) {
+export function AppHeader({ onOpenSearch, entryCount, isAdmin }: AppHeaderProps) {
   return (
     <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
       {/* Title bar */}
@@ -37,25 +38,27 @@ export function AppHeader({ onOpenSearch, entryCount }: AppHeaderProps) {
 
         <div className="flex items-center gap-1 shrink-0">
           <ThemeToggle />
-          <TooltipProvider delayDuration={300}>
-            <Tooltip>
-              <TooltipTrigger asChild>
-                <Button
-                  variant="ghost"
-                  size="icon"
-                  className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer"
-                  asChild
-                >
-                  <Link href="/settings">
-                    <Settings className="h-4 w-4" />
-                  </Link>
-                </Button>
-              </TooltipTrigger>
-              <TooltipContent side="bottom">
-                <p>Manage translations</p>
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
+          {isAdmin && (
+            <TooltipProvider delayDuration={300}>
+              <Tooltip>
+                <TooltipTrigger asChild>
+                  <Button
+                    variant="ghost"
+                    size="icon"
+                    className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer"
+                    asChild
+                  >
+                    <Link href="/settings">
+                      <Settings className="h-4 w-4" />
+                    </Link>
+                  </Button>
+                </TooltipTrigger>
+                <TooltipContent side="bottom">
+                  <p>Manage translations</p>
+                </TooltipContent>
+              </Tooltip>
+            </TooltipProvider>
+          )}
         </div>
       </div>
 

@@ -9,6 +9,7 @@ import { useDictionary } from "@/hooks/use-dictionary";
 import { EditableTable } from "@/components/editable-table";
 import { AddTranslationButton } from "@/components/add-translation-button";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { PasswordGate } from "@/components/password-gate";
 
 export default function SettingsPage() {
   const { entries, loaded, addEntry, updateEntry, deleteEntry } =
@@ -23,6 +24,7 @@ export default function SettingsPage() {
   }
 
   return (
+    <PasswordGate>
     <div className="flex min-h-screen flex-col bg-background text-foreground">
       <div className="mx-auto w-full max-w-3xl px-3 sm:px-4 py-6 sm:py-8">
         {/* Header */}
@@ -65,5 +67,6 @@ export default function SettingsPage() {
         />
       </div>
     </div>
+    </PasswordGate>
   );
 }

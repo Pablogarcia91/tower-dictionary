@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback } from "react";
+import { useState, useCallback, useEffect } from "react";
 import { AppHeader } from "@/components/app-header";
 import { TranslationList } from "@/components/translation-list";
 import { CommandPalette } from "@/components/command-palette";
@@ -12,6 +12,14 @@ interface DictionaryAppProps {
 
 export function DictionaryApp({ entries }: DictionaryAppProps) {
   const [searchOpen, setSearchOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+
+  useEffect(() => {
+    fetch("/api/auth")
+      .then((r) => r.json())
+      .then((data) => setIsAdmin(data.authenticated === true))
+      .catch(() => setIsAdmin(false));
+  }, []);
 
   const handleOpenSearch = useCallback(() => {
     setSearchOpen(true);
@@ -29,6 +37,7 @@ export function DictionaryApp({ entries }: DictionaryAppProps) {
         <AppHeader
           onOpenSearch={handleOpenSearch}
           entryCount={entries.length}
+          isAdmin={isAdmin}
         />
 
         <TranslationList entries={entries} />
