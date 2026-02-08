@@ -1,15 +1,26 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
-import { getEntries } from "@/lib/dictionary-actions";
+import { useDictionary } from "@/hooks/use-dictionary";
 import { EditableTable } from "@/components/editable-table";
 import { AddTranslationButton } from "@/components/add-translation-button";
 import { ThemeToggle } from "@/components/theme-toggle";
 
-export default async function SettingsPage() {
-  const entries = await getEntries();
+export default function SettingsPage() {
+  const { entries, loaded, addEntry, updateEntry, deleteEntry } =
+    useDictionary();
+
+  if (!loaded) {
+    return (
+      <div className="flex min-h-screen items-center justify-center bg-background text-foreground">
+        <p className="text-sm text-muted-foreground">Loading...</p>
+      </div>
+    );
+  }
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
@@ -40,14 +51,18 @@ export default async function SettingsPage() {
             </div>
             <div className="flex items-center gap-2 shrink-0">
               <ThemeToggle />
-              <AddTranslationButton />
+              <AddTranslationButton onAdd={addEntry} />
             </div>
           </div>
           <Separator />
         </div>
 
         {/* Editable table */}
-        <EditableTable entries={entries} />
+        <EditableTable
+          entries={entries}
+          onUpdate={updateEntry}
+          onDelete={deleteEntry}
+        />
       </div>
     </div>
   );

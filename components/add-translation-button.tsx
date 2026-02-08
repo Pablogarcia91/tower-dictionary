@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useRef, useTransition } from "react";
-import { Plus, Check, X } from "lucide-react";
+import { useState, useRef } from "react";
+import { Plus } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -13,14 +13,16 @@ import {
   DialogTitle,
   DialogDescription,
 } from "@/components/ui/dialog";
-import { addEntry } from "@/lib/dictionary-actions";
 
-export function AddTranslationButton() {
+interface AddTranslationButtonProps {
+  onAdd: (en: string, es: string, notes?: string) => void;
+}
+
+export function AddTranslationButton({ onAdd }: AddTranslationButtonProps) {
   const [open, setOpen] = useState(false);
   const [en, setEn] = useState("");
   const [es, setEs] = useState("");
   const [notes, setNotes] = useState("");
-  const [isPending, startTransition] = useTransition();
   const enRef = useRef<HTMLInputElement>(null);
 
   function reset() {
@@ -35,12 +37,10 @@ export function AddTranslationButton() {
       toast.error("English and Spanish are required");
       return;
     }
-    startTransition(async () => {
-      await addEntry(en, es, notes);
-      toast.success("Translation added");
-      reset();
-      setOpen(false);
-    });
+    onAdd(en, es, notes);
+    toast.success("Translation added");
+    reset();
+    setOpen(false);
   }
 
   return (
@@ -128,7 +128,6 @@ export function AddTranslationButton() {
               <Button
                 type="submit"
                 size="sm"
-                disabled={isPending}
                 className="cursor-pointer"
               >
                 <Plus className="h-3.5 w-3.5 mr-1.5" />

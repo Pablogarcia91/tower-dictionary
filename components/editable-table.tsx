@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useState, useTransition } from "react";
+import { useMemo, useState } from "react";
 import { Trash2, Check, X, Volume2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
@@ -16,11 +16,12 @@ import {
   TableRow,
 } from "@/components/ui/table";
 import { useTTS } from "@/hooks/use-tts";
-import { updateEntry, deleteEntry } from "@/lib/dictionary-actions";
 import type { DictionaryEntry } from "@/lib/types";
 
 interface EditableTableProps {
   entries: DictionaryEntry[];
+  onUpdate: (id: string, en: string, es: string, notes?: string) => DictionaryEntry | null;
+  onDelete: (id: string) => void;
 }
 
 interface EditingState {
@@ -52,9 +53,8 @@ function groupByLetter(entries: DictionaryEntry[]) {
   return groups;
 }
 
-export function EditableTable({ entries }: EditableTableProps) {
+export function EditableTable({ entries, onUpdate, onDelete }: EditableTableProps) {
   const [editing, setEditing] = useState<EditingState | null>(null);
-  const [isPending, startTransition] = useTransition();
   const { speak } = useTTS();
 
   const groups = useMemo(() => groupByLetter(entries), [entries]);
@@ -78,31 +78,18 @@ export function EditableTable({ entries }: EditableTableProps) {
       toast.error("English and Spanish are required");
       return;
     }
-    startTransition(async () => {
-      const result = await updateEntry(
-        editing.id,
-        editing.en,
-        editing.es,
-        editing.notes
-      );
-      if (result) {
-        toast.success("Translation updated");
-        setEditing(null);
-      } else {
-        toast.error("Failed to update");
-      }
-    });
+    const result = onUpdate(editing.id, editing.en, editing.es, editing.notes);
+    if (result) {
+      toast.success("Translation updated");
+      setEditing(null);
+    } else {
+      toast.error("Failed to update");
+    }
   }
 
   function handleDelete(id: string) {
-    startTransition(async () => {
-      const success = await deleteEntry(id);
-      if (success) {
-        toast.success("Translation deleted");
-      } else {
-        toast.error("Failed to delete");
-      }
-    });
+    onDelete(id);
+    toast.success("Translation deleted");
   }
 
   function handleEditKeyDown(e: React.KeyboardEvent) {
@@ -161,7 +148,6 @@ export function EditableTable({ entries }: EditableTableProps) {
             size="sm"
             className="h-7 cursor-pointer"
             onClick={saveEdit}
-            disabled={isPending}
           >
             <Check className="h-3.5 w-3.5 mr-1" />
             Save
@@ -308,7 +294,6 @@ export function EditableTable({ entries }: EditableTableProps) {
                             size="icon"
                             className="h-7 w-7 text-green-500 hover:text-green-400 cursor-pointer"
                             onClick={saveEdit}
-                            disabled={isPending}
                           >
                             <Check className="h-3.5 w-3.5" />
                           </Button>
