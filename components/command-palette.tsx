@@ -68,7 +68,7 @@ export function CommandPalette({
               value={entry.id}
               onSelect={() => {
                 speak(entry.en, "en");
-                setTimeout(() => speak(entry.es, "es"), 1500);
+                setTimeout(() => speak(entry.es, "ca"), 1500);
               }}
               className="flex items-center gap-3 py-3"
             >
@@ -91,7 +91,7 @@ export function CommandPalette({
                   variant="outline"
                   className="shrink-0 text-[10px] font-mono px-1.5 py-0"
                 >
-                  ES
+                  VA
                 </Badge>
                 <span className="truncate">{entry.es}</span>
               </div>

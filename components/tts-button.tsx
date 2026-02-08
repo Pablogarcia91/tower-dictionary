@@ -12,14 +12,14 @@ import { useTTS } from "@/hooks/use-tts";
 
 interface TTSButtonProps {
   text: string;
-  lang: "en" | "es";
+  lang: "en" | "ca";
   size?: "sm" | "default";
 }
 
 export function TTSButton({ text, lang, size = "sm" }: TTSButtonProps) {
   const { speak, speaking } = useTTS();
 
-  const label = lang === "en" ? "Pronounce in English" : "Pronunciar en Espanol";
+  const label = lang === "en" ? "Pronounce in English" : "Pronunciar en Valencià";
 
   return (
     <TooltipProvider delayDuration={300}>

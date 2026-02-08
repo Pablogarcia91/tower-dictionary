@@ -75,7 +75,7 @@ export function EditableTable({ entries, onUpdate, onDelete }: EditableTableProp
   function saveEdit() {
     if (!editing) return;
     if (!editing.en.trim() || !editing.es.trim()) {
-      toast.error("English and Spanish are required");
+      toast.error("English and Valencià are required");
       return;
     }
     const result = onUpdate(editing.id, editing.en, editing.es, editing.notes);
@@ -117,7 +117,7 @@ export function EditableTable({ entries, onUpdate, onDelete }: EditableTableProp
           />
         </div>
         <div className="space-y-1.5">
-          <Label className="text-xs text-muted-foreground">Spanish</Label>
+          <Label className="text-xs text-muted-foreground">Valencià</Label>
           <Input
             value={editing.es}
             onChange={(e) => setEditing({ ...editing, es: e.target.value })}
@@ -218,14 +218,14 @@ export function EditableTable({ entries, onUpdate, onDelete }: EditableTableProp
                       variant="outline"
                       className="shrink-0 text-[10px] font-mono px-1.5 py-0"
                     >
-                      ES
+                      VA
                     </Badge>
                     <span className="truncate font-medium">{entry.es}</span>
                     <button
                       className="text-muted-foreground cursor-pointer"
                       onClick={(e) => {
                         e.stopPropagation();
-                        speak(entry.es, "es");
+                        speak(entry.es, "ca");
                       }}
                     >
                       <Volume2 className="h-3.5 w-3.5" />
@@ -247,7 +247,7 @@ export function EditableTable({ entries, onUpdate, onDelete }: EditableTableProp
               <TableHeader>
                 <TableRow className="hover:bg-transparent">
                   <TableHead className="w-[30%]">English</TableHead>
-                  <TableHead className="w-[30%]">Spanish</TableHead>
+                  <TableHead className="w-[30%]">Valencià</TableHead>
                   <TableHead className="w-[25%]">Notes</TableHead>
                   <TableHead className="w-[15%] text-right">Actions</TableHead>
                 </TableRow>
@@ -335,7 +335,7 @@ export function EditableTable({ entries, onUpdate, onDelete }: EditableTableProp
                             className="opacity-0 group-hover:opacity-100 transition-opacity text-muted-foreground hover:text-foreground cursor-pointer"
                             onClick={(e) => {
                               e.stopPropagation();
-                              speak(entry.es, "es");
+                              speak(entry.es, "ca");
                             }}
                           >
                             <Volume2 className="h-3.5 w-3.5" />

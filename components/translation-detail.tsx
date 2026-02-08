@@ -66,20 +66,20 @@ export function TranslationDetail({
 
           <Separator />
 
-          {/* Spanish */}
+          {/* Valencià */}
           <div className="space-y-1.5">
             <div className="flex items-center gap-2">
               <Badge
                 variant="outline"
                 className="text-[10px] font-mono px-1.5 py-0"
               >
-                ES
+                VA
               </Badge>
-              <span className="text-xs text-muted-foreground">Spanish</span>
+              <span className="text-xs text-muted-foreground">Valencià</span>
             </div>
             <div className="flex items-center gap-2">
               <p className="text-lg font-medium">{entry.es}</p>
-              <TTSButton text={entry.es} lang="es" size="default" />
+              <TTSButton text={entry.es} lang="ca" size="default" />
             </div>
           </div>
 

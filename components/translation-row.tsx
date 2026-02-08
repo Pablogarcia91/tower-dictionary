@@ -1,7 +1,7 @@
 "use client";
 
-import { Badge } from "@/components/ui/badge";
-import { TTSButton } from "@/components/tts-button";
+import { Volume2 } from "lucide-react";
+import { useTTS } from "@/hooks/use-tts";
 import type { DictionaryEntry } from "@/lib/types";
 
 interface TranslationRowProps {
@@ -10,43 +10,51 @@ interface TranslationRowProps {
 }
 
 export function TranslationRow({ entry, onClick }: TranslationRowProps) {
+  const { speak } = useTTS();
+
   return (
     <div
-      className="group flex flex-col gap-1.5 sm:grid sm:grid-cols-[1fr_auto_1fr_1fr] sm:items-center sm:gap-3 rounded-lg border border-transparent px-4 py-3 transition-colors hover:border-border hover:bg-card cursor-pointer"
+      className="group w-full rounded-lg border border-border bg-card px-4 py-3 sm:px-5 sm:py-4 transition-colors hover:border-ring cursor-pointer"
       onClick={onClick}
     >
-      {/* English */}
-      <div className="flex items-center gap-2 min-w-0">
-        <Badge
-          variant="outline"
-          className="shrink-0 text-[10px] font-mono px-1.5 py-0"
+      {/* English + TTS */}
+      <div className="flex items-center gap-2">
+        <span className="text-base sm:text-lg font-semibold text-foreground">
+          {entry.en}
+        </span>
+        <button
+          className="text-muted-foreground hover:text-foreground transition-colors cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation();
+            speak(entry.en, "en");
+          }}
         >
-          EN
-        </Badge>
-        <span className="truncate font-medium">{entry.en}</span>
-        <TTSButton text={entry.en} lang="en" />
+          <Volume2 className="h-3.5 w-3.5" />
+        </button>
       </div>
 
-      {/* Arrow - hidden on mobile */}
-      <span className="hidden sm:block text-muted-foreground text-xs">↔</span>
-
-      {/* Spanish */}
-      <div className="flex items-center gap-2 min-w-0">
-        <Badge
-          variant="outline"
-          className="shrink-0 text-[10px] font-mono px-1.5 py-0"
+      {/* Valencià + TTS */}
+      <div className="flex items-center gap-2 mt-1">
+        <span className="text-sm sm:text-base text-muted-foreground">
+          {entry.es}
+        </span>
+        <button
+          className="text-muted-foreground/60 hover:text-foreground transition-colors cursor-pointer"
+          onClick={(e) => {
+            e.stopPropagation();
+            speak(entry.es, "ca");
+          }}
         >
-          ES
-        </Badge>
-        <span className="truncate font-medium">{entry.es}</span>
-        <TTSButton text={entry.es} lang="es" />
+          <Volume2 className="h-3 w-3" />
+        </button>
       </div>
 
       {/* Notes */}
       {entry.notes && (
-        <span className="text-xs text-muted-foreground truncate pl-7 sm:pl-0">
+        <p className="mt-2 text-xs text-muted-foreground/70 leading-relaxed">
+          <span className="font-medium text-muted-foreground/90">Note:</span>{" "}
           {entry.notes}
-        </span>
+        </p>
       )}
     </div>
   );

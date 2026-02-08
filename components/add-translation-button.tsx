@@ -34,7 +34,7 @@ export function AddTranslationButton({ onAdd }: AddTranslationButtonProps) {
   function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!en.trim() || !es.trim()) {
-      toast.error("English and Spanish are required");
+      toast.error("English and Valencià are required");
       return;
     }
     onAdd(en, es, notes);
@@ -87,7 +87,7 @@ export function AddTranslationButton({ onAdd }: AddTranslationButtonProps) {
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="add-es" className="text-xs text-muted-foreground">
-                Spanish
+                Valencià
               </Label>
               <Input
                 id="add-es"

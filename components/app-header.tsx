@@ -28,7 +28,7 @@ export function AppHeader({ onOpenSearch, entryCount }: AppHeaderProps) {
             Tower Dictionary
           </h1>
           <Badge variant="secondary" className="hidden sm:inline-flex text-[10px] font-mono">
-            EN ↔ ES
+            EN ↔ VA
           </Badge>
           <Badge variant="outline" className="text-[10px] font-mono px-1.5 py-0">
             {entryCount}

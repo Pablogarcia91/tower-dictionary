@@ -75,7 +75,7 @@ export function TranslationList({ entries }: TranslationListProps) {
               </div>
 
               {/* Entries */}
-              <div className="space-y-0.5">
+              <div className="space-y-2">
                 {group.entries.map((entry) => (
                   <TranslationRow
                     key={entry.id}

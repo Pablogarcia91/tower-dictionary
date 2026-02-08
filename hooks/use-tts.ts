@@ -18,12 +18,12 @@ export function useTTS() {
       speechSynthesis.removeEventListener("voiceschanged", loadVoices);
   }, []);
 
-  const speak = useCallback((text: string, lang: "en" | "es") => {
+  const speak = useCallback((text: string, lang: "en" | "ca") => {
     if (typeof window === "undefined") return;
 
     speechSynthesis.cancel();
     const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = lang === "en" ? "en-US" : "es-ES";
+    utterance.lang = lang === "en" ? "en-US" : "ca-ES";
 
     const voices = voicesRef.current;
     const langVoice = voices.find(
