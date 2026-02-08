@@ -20,14 +20,14 @@ interface AppHeaderProps {
 
 export function AppHeader({ onOpenSearch, entryCount }: AppHeaderProps) {
   return (
-    <div className="space-y-4 mb-6">
+    <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
       {/* Title bar */}
       <div className="flex items-center justify-between">
-        <div className="flex items-center gap-3">
-          <h1 className="text-xl font-semibold tracking-tight">
+        <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+          <h1 className="text-lg sm:text-xl font-semibold tracking-tight truncate">
             Tower Dictionary
           </h1>
-          <Badge variant="secondary" className="text-[10px] font-mono">
+          <Badge variant="secondary" className="hidden sm:inline-flex text-[10px] font-mono">
             EN ↔ ES
           </Badge>
           <Badge variant="outline" className="text-[10px] font-mono px-1.5 py-0">
@@ -35,7 +35,7 @@ export function AppHeader({ onOpenSearch, entryCount }: AppHeaderProps) {
           </Badge>
         </div>
 
-        <div className="flex items-center gap-1">
+        <div className="flex items-center gap-1 shrink-0">
           <ThemeToggle />
           <TooltipProvider delayDuration={300}>
             <Tooltip>
@@ -62,11 +62,11 @@ export function AppHeader({ onOpenSearch, entryCount }: AppHeaderProps) {
       {/* Centered search bar */}
       <button
         onClick={onOpenSearch}
-        className="flex w-full items-center gap-2 rounded-lg border border-border bg-card px-4 py-2.5 text-sm text-muted-foreground transition-colors hover:border-ring hover:text-foreground cursor-pointer"
+        className="flex w-full items-center gap-2 rounded-lg border border-border bg-card px-3 sm:px-4 py-2 sm:py-2.5 text-sm text-muted-foreground transition-colors hover:border-ring hover:text-foreground cursor-pointer"
       >
         <Search className="h-4 w-4 shrink-0" />
-        <span className="flex-1 text-left">Search translations...</span>
-        <kbd className="rounded bg-muted px-1.5 py-0.5 font-mono text-[10px]">
+        <span className="flex-1 text-left">Search...</span>
+        <kbd className="hidden sm:inline rounded bg-muted px-1.5 py-0.5 font-mono text-[10px]">
           Cmd K
         </kbd>
       </button>

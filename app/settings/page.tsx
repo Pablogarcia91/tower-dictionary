@@ -13,23 +13,23 @@ export default async function SettingsPage() {
 
   return (
     <div className="flex min-h-screen flex-col bg-background text-foreground">
-      <div className="mx-auto w-full max-w-3xl px-4 py-8">
+      <div className="mx-auto w-full max-w-3xl px-3 sm:px-4 py-6 sm:py-8">
         {/* Header */}
-        <div className="space-y-4 mb-6">
+        <div className="space-y-3 sm:space-y-4 mb-4 sm:mb-6">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-3">
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
               <Button
                 variant="ghost"
                 size="icon"
-                className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer"
+                className="h-8 w-8 text-muted-foreground hover:text-foreground cursor-pointer shrink-0"
                 asChild
               >
                 <Link href="/">
                   <ArrowLeft className="h-4 w-4" />
                 </Link>
               </Button>
-              <h1 className="text-xl font-semibold tracking-tight">
-                Manage Translations
+              <h1 className="text-lg sm:text-xl font-semibold tracking-tight truncate">
+                Manage
               </h1>
               <Badge
                 variant="outline"
@@ -38,7 +38,7 @@ export default async function SettingsPage() {
                 {entries.length}
               </Badge>
             </div>
-            <div className="flex items-center gap-2">
+            <div className="flex items-center gap-2 shrink-0">
               <ThemeToggle />
               <AddTranslationButton />
             </div>

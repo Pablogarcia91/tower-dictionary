@@ -12,7 +12,7 @@ interface TranslationRowProps {
 export function TranslationRow({ entry, onClick }: TranslationRowProps) {
   return (
     <div
-      className="group grid grid-cols-[1fr_auto_1fr_1fr] items-center gap-3 rounded-lg border border-transparent px-4 py-3 transition-colors hover:border-border hover:bg-card cursor-pointer"
+      className="group flex flex-col gap-1.5 sm:grid sm:grid-cols-[1fr_auto_1fr_1fr] sm:items-center sm:gap-3 rounded-lg border border-transparent px-4 py-3 transition-colors hover:border-border hover:bg-card cursor-pointer"
       onClick={onClick}
     >
       {/* English */}
@@ -27,8 +27,8 @@ export function TranslationRow({ entry, onClick }: TranslationRowProps) {
         <TTSButton text={entry.en} lang="en" />
       </div>
 
-      {/* Arrow */}
-      <span className="text-muted-foreground text-xs">↔</span>
+      {/* Arrow - hidden on mobile */}
+      <span className="hidden sm:block text-muted-foreground text-xs">↔</span>
 
       {/* Spanish */}
       <div className="flex items-center gap-2 min-w-0">
@@ -43,13 +43,11 @@ export function TranslationRow({ entry, onClick }: TranslationRowProps) {
       </div>
 
       {/* Notes */}
-      <div className="flex items-center gap-2 min-w-0">
-        {entry.notes && (
-          <span className="hidden sm:block text-xs text-muted-foreground truncate">
-            {entry.notes}
-          </span>
-        )}
-      </div>
+      {entry.notes && (
+        <span className="text-xs text-muted-foreground truncate pl-7 sm:pl-0">
+          {entry.notes}
+        </span>
+      )}
     </div>
   );
 }
