@@ -20,8 +20,8 @@ import type { DictionaryEntry } from "@/lib/types";
 
 interface EditableTableProps {
   entries: DictionaryEntry[];
-  onUpdate: (id: string, en: string, es: string, notes?: string) => DictionaryEntry | null;
-  onDelete: (id: string) => void;
+  onUpdate: (id: string, en: string, es: string, notes?: string) => Promise<DictionaryEntry | null>;
+  onDelete: (id: string) => Promise<void>;
 }
 
 interface EditingState {
@@ -72,24 +72,32 @@ export function EditableTable({ entries, onUpdate, onDelete }: EditableTableProp
     setEditing(null);
   }
 
-  function saveEdit() {
+  async function saveEdit() {
     if (!editing) return;
     if (!editing.en.trim() || !editing.es.trim()) {
       toast.error("English and Valencià are required");
       return;
     }
-    const result = onUpdate(editing.id, editing.en, editing.es, editing.notes);
-    if (result) {
-      toast.success("Translation updated");
-      setEditing(null);
-    } else {
+    try {
+      const result = await onUpdate(editing.id, editing.en, editing.es, editing.notes);
+      if (result) {
+        toast.success("Translation updated");
+        setEditing(null);
+      } else {
+        toast.error("Failed to update");
+      }
+    } catch {
       toast.error("Failed to update");
     }
   }
 
-  function handleDelete(id: string) {
-    onDelete(id);
-    toast.success("Translation deleted");
+  async function handleDelete(id: string) {
+    try {
+      await onDelete(id);
+      toast.success("Translation deleted");
+    } catch {
+      toast.error("Failed to delete");
+    }
   }
 
   function handleEditKeyDown(e: React.KeyboardEvent) {

@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog";
 
 interface AddTranslationButtonProps {
-  onAdd: (en: string, es: string, notes?: string) => void;
+  onAdd: (en: string, es: string, notes?: string) => Promise<unknown>;
 }
 
 export function AddTranslationButton({ onAdd }: AddTranslationButtonProps) {
@@ -31,16 +31,20 @@ export function AddTranslationButton({ onAdd }: AddTranslationButtonProps) {
     setNotes("");
   }
 
-  function handleSubmit(e: React.FormEvent) {
+  async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     if (!en.trim() || !es.trim()) {
       toast.error("English and Valencià are required");
       return;
     }
-    onAdd(en, es, notes);
-    toast.success("Translation added");
-    reset();
-    setOpen(false);
+    try {
+      await onAdd(en, es, notes);
+      toast.success("Translation added");
+      reset();
+      setOpen(false);
+    } catch {
+      toast.error("Failed to add translation");
+    }
   }
 
   return (
