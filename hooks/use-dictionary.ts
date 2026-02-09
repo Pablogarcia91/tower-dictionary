@@ -7,6 +7,13 @@ export function useDictionary() {
   const [entries, setEntries] = useState<DictionaryEntry[]>([]);
   const [loaded, setLoaded] = useState(false);
 
+  const refetch = useCallback(() => {
+    fetch("/api/entries")
+      .then((r) => r.json())
+      .then((data: DictionaryEntry[]) => setEntries(data))
+      .catch(() => {});
+  }, []);
+
   useEffect(() => {
     fetch("/api/entries")
       .then((r) => r.json())
@@ -53,5 +60,5 @@ export function useDictionary() {
     setEntries((prev) => prev.filter((e) => e.id !== id));
   }, []);
 
-  return { entries, loaded, addEntry, updateEntry, deleteEntry };
+  return { entries, loaded, addEntry, updateEntry, deleteEntry, refetch };
 }

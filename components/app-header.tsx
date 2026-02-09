@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { Settings, Search } from "lucide-react";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { SuggestionButton } from "@/components/suggestion-button";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Separator } from "@/components/ui/separator";
@@ -37,6 +38,7 @@ export function AppHeader({ onOpenSearch, entryCount }: AppHeaderProps) {
 
         <div className="flex items-center gap-1 shrink-0">
           <ThemeToggle />
+          <SuggestionButton />
           <TooltipProvider delayDuration={300}>
             <Tooltip>
               <TooltipTrigger asChild>

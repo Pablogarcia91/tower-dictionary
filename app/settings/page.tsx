@@ -8,11 +8,12 @@ import { Separator } from "@/components/ui/separator";
 import { useDictionary } from "@/hooks/use-dictionary";
 import { EditableTable } from "@/components/editable-table";
 import { AddTranslationButton } from "@/components/add-translation-button";
+import { SuggestionsPanel } from "@/components/suggestions-panel";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { PasswordGate } from "@/components/password-gate";
 
 export default function SettingsPage() {
-  const { entries, loaded, addEntry, updateEntry, deleteEntry } =
+  const { entries, loaded, addEntry, updateEntry, deleteEntry, refetch } =
     useDictionary();
 
   if (!loaded) {
@@ -58,6 +59,16 @@ export default function SettingsPage() {
           </div>
           <Separator />
         </div>
+
+        {/* Suggestions */}
+        <div className="mb-6">
+          <h2 className="text-sm font-medium text-muted-foreground mb-3">
+            Suggestions
+          </h2>
+          <SuggestionsPanel onApproved={refetch} />
+        </div>
+
+        <Separator className="mb-6" />
 
         {/* Editable table */}
         <EditableTable
