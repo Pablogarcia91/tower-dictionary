@@ -15,8 +15,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://tower-dictionary.vercel.app"),
   title: "Tower Dictionary",
-  description: "Personal EN ↔ ES translation dictionary",
+  description: "Personal EN ↔ VA translation dictionary",
 };
 
 export default function RootLayout({
